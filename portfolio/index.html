@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rick Robbins — Portfolio</title>
+  <meta name="description" content="Before and after website transformations for coaches, healers, and transformational practitioners.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0F172A',
+              muted: '#475569',
+              light: '#94A3B8',
+              accent: '#CA8A04',
+              'accent-light': '#FEF9C3',
+              bg: '#FFFFFF',
+              'bg-warm': '#FAFAF9',
+            }
+          },
+          fontFamily: {
+            serif: ['EB Garamond', 'Georgia', 'serif'],
+            sans: ['Lato', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @font-face { font-family: 'Miniday'; src: url('Miniday.otf') format('opentype'); font-display: swap; }
+
+    /* Nav */
+    .nav-logo { display: block; width: 288px; max-width: 52vw; height: auto; }
+    .nav-logo-light { display: none; }
+    .nav-scrolled { background: #0F172A; backdrop-filter: blur(12px); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .nav-scrolled a { color: rgba(255,255,255,0.8) !important; }
+    .nav-scrolled a:hover { color: #ffffff !important; }
+    .nav-scrolled .btn-primary { background: #CA8A04 !important; color: #ffffff !important; }
+    .nav-scrolled .nav-link::after { background: #CA8A04; }
+    .nav-scrolled #menu-toggle svg { color: #ffffff; }
+    .nav-scrolled .nav-logo-dark { display: none; }
+    .nav-scrolled .nav-logo-light { display: block; }
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #CA8A04;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .btn-primary { background: #0F172A; color: #FFFFFF; transition: all 0.2s; }
+    .btn-primary:hover { background: #1E293B; }
+
+    /* Footer */
+    .footer-logo { display: block; width: 288px; max-width: 70vw; height: auto; }
+
+    /* Mobile nav */
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .mobile-menu.open { max-height: 300px; }
+
+    /* Before/After marquee */
+    .ba-section-wrap { overflow: hidden; }
+    .ba-marquee {
+      display: flex;
+      gap: 32px;
+      width: max-content;
+      animation: baMarquee 40s linear infinite;
+    }
+    .ba-marquee:hover { animation-play-state: paused; }
+    @keyframes baMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ba-card { position: relative; flex-shrink: 0; width: 600px; }
+    .ba-client-name {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.04em;
+    }
+    .ba-container {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: ew-resize;
+      user-select: none;
+      -webkit-user-select: none;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    }
+    @media (max-width: 768px) {
+      .ba-card { width: 85vw; }
+      .ba-container { height: 300px; }
+    }
+    .ba-scroll {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
+    }
+    .ba-scroll::-webkit-scrollbar { display: none; }
+    .ba-scroll img { display: block; width: 100%; height: auto; pointer-events: none; }
+    .ba-after-scroll {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      clip-path: inset(0 0 0 50%);
+      z-index: 2; overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
+    }
+    .ba-after-scroll::-webkit-scrollbar { display: none; }
+    .ba-after-scroll img { display: block; width: 100%; height: auto; pointer-events: none; }
+    .ba-handle {
+      position: absolute; top: 0; bottom: 0; left: 50%;
+      width: 4px; margin-left: -2px;
+      background: rgba(255,255,255,0.8);
+      z-index: 3; display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .ba-handle-circle {
+      width: 36px; height: 36px; background: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease; color: #374151;
+      pointer-events: auto; cursor: ew-resize;
+    }
+    .ba-container:active .ba-handle-circle { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+    .ba-scrollbar-track {
+      position: absolute; top: 12px; right: 12px; bottom: 12px;
+      width: 6px; background: rgba(255,255,255,0.15); border-radius: 3px;
+      z-index: 5; pointer-events: none;
+    }
+    .ba-scrollbar-thumb {
+      position: absolute; top: 0; left: 0; width: 100%;
+      background: rgba(255,255,255,0.7); border-radius: 3px; min-height: 30px;
+    }
+    .ba-labels { display: flex; justify-content: space-between; margin-top: 12px; padding: 0 4px; }
+    .ba-label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  </style>
+</head>
+<body class="bg-brand-dark antialiased">
+
+  <!-- Navigation -->
+  <nav id="nav" class="fixed top-0 left-0 right-0 z-50 nav-scrolled">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+      <a href="/" class="cursor-pointer" aria-label="Rick Robbins Home">
+        <img src="rick-robbins-logo-dark.svg" alt="Rick Robbins" class="nav-logo nav-logo-dark">
+        <img src="rick-robbins-logo-light.svg" alt="Rick Robbins" class="nav-logo nav-logo-light">
+      </a>
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-10">
+        <a href="/#work" class="nav-link text-base font-light tracking-wide text-brand-muted hover:text-brand-dark cursor-pointer">The Work</a>
+        <a href="/portfolio" class="nav-link text-base font-light tracking-wide text-white cursor-pointer" style="pointer-events:none;">Portfolio</a>
+        <a href="/#who" class="nav-link text-base font-light tracking-wide text-brand-muted hover:text-brand-dark cursor-pointer">Who It's For</a>
+        <a href="/#about" class="nav-link text-base font-light tracking-wide text-brand-muted hover:text-brand-dark cursor-pointer">About</a>
+        <a href="/#top" class="btn-primary px-7 py-2.5 text-base font-normal tracking-wide rounded-full cursor-pointer">Let's Talk</a>
+      </div>
+      <!-- Mobile Hamburger -->
+      <button id="menu-toggle" class="md:hidden cursor-pointer p-2" aria-label="Toggle menu">
+        <svg class="w-6 h-6 text-brand-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu md:hidden px-6 bg-brand-dark">
+      <div class="py-4 flex flex-col gap-4 border-t border-white/10">
+        <a href="/#work" class="text-sm font-light text-white/70 cursor-pointer">The Work</a>
+        <a href="/portfolio" class="text-sm font-light text-white cursor-pointer">Portfolio</a>
+        <a href="/#who" class="text-sm font-light text-white/70 cursor-pointer">Who It's For</a>
+        <a href="/#about" class="text-sm font-light text-white/70 cursor-pointer">About</a>
+        <a href="/#top" class="btn-primary px-6 py-2.5 text-sm text-center rounded-full cursor-pointer">Let's Talk</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-40 pb-16 px-6">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="text-sm tracking-[0.3em] uppercase text-brand-accent font-light mb-4">Portfolio</p>
+      <h1 class="font-serif text-4xl md:text-6xl font-medium leading-tight text-white mb-4">Before &amp; After</h1>
+      <p class="text-white/60 text-lg font-light max-w-xl mx-auto">Real transformations. Drag the slider to see the difference.</p>
+    </div>
+  </section>
+
+  <!-- Before / After Marquee -->
+  <section class="py-16 ba-section-wrap">
+    <div class="ba-marquee" id="ba-marquee">
+
+      <!-- Card 1 — shemsheartwell.com -->
+      <div class="ba-card" data-client="shemsheartwell.com">
+        <div class="ba-container">
+          <div class="ba-scroll ba-before-scroll">
+            <img src="beforeafter/shemsheartwell.com/shems-before-full.jpg" alt="shemsheartwell.com before redesign" draggable="false">
+          </div>
+          <div class="ba-after-scroll">
+            <img src="beforeafter/shemsheartwell.com/shems-after-full-2.jpg" alt="shemsheartwell.com after redesign" draggable="false">
+          </div>
+          <div class="ba-handle">
+            <div class="ba-handle-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8l-4 4 4 4"/><path d="M6 8l4 4-4 4"/></svg>
+            </div>
+          </div>
+          <div class="ba-scrollbar-track"><div class="ba-scrollbar-thumb"></div></div>
+        </div>
+        <div class="ba-labels">
+          <span class="ba-label">Before</span>
+          <span class="ba-label">After</span>
+        </div>
+        <p class="ba-client-name">shemsheartwell.com</p>
+      </div>
+
+      <!-- Card 2 — vincechafin.com -->
+      <div class="ba-card" data-client="vincechafin.com">
+        <div class="ba-container">
+          <div class="ba-scroll ba-before-scroll">
+            <img src="beforeafter/vincechafin.com/vince-before-full.jpg" alt="vincechafin.com before redesign" draggable="false">
+          </div>
+          <div class="ba-after-scroll">
+            <img src="beforeafter/vincechafin.com/vince-after-full.jpg" alt="vincechafin.com after redesign" draggable="false">
+          </div>
+          <div class="ba-handle">
+            <div class="ba-handle-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8l-4 4 4 4"/><path d="M6 8l4 4-4 4"/></svg>
+            </div>
+          </div>
+          <div class="ba-scrollbar-track"><div class="ba-scrollbar-thumb"></div></div>
+        </div>
+        <div class="ba-labels">
+          <span class="ba-label">Before</span>
+          <span class="ba-label">After</span>
+        </div>
+        <p class="ba-client-name">vincechafin.com</p>
+      </div>
+
+      <!-- Card 3 — sacredsons.com homepage -->
+      <div class="ba-card ba-card-showcase">
+        <div class="ba-container">
+          <div class="ba-scroll ba-before-scroll">
+            <img src="beforeafter/sacredsons.com/ss-homepage-full.jpg" alt="sacredsons.com homepage" draggable="false">
+          </div>
+        </div>
+        <p class="ba-client-name">sacredsons.com</p>
+      </div>
+
+      <!-- DUPLICATES for seamless loop -->
+
+      <div class="ba-card" data-client="shemsheartwell.com" aria-hidden="true">
+        <div class="ba-container">
+          <div class="ba-scroll ba-before-scroll">
+            <img src="beforeafter/shemsheartwell.com/shems-before-full.jpg" alt="" draggable="false">
+          </div>
+          <div class="ba-after-scroll">
+            <img src="beforeafter/shemsheartwell.com/shems-after-full-2.jpg" alt="" draggable="false">
+          </div>
+          <div class="ba-handle">
+            <div class="ba-handle-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8l-4 4 4 4"/><path d="M6 8l4 4-4 4"/></svg>
+            </div>
+          </div>
+          <div class="ba-scrollbar-track"><div class="ba-scrollbar-thumb"></div></div>
+        </div>
+        <div class="ba-labels">
+          <span class="ba-label">Before</span>
+          <span class="ba-label">After</span>
+        </div>
+        <p class="ba-client-name">shemsheartwell.com</p>
+      </div>
+
+      <div class="ba-card" data-client="vincechafin.com" aria-hidden="true">
+        <div class="ba-container">
+          <div class="ba-scroll ba-before-scroll">
+            <img src="beforeafter/vincechafin.com/vince-before-full.jpg" alt="" draggable="false">
+          </div>
+          <div class="ba-after-scroll">
+            <img src="beforeafter/vincechafin.com/vince-after-full.jpg" alt="" draggable="false">
+          </div>
+          <div class="ba-handle">
+            <div class="ba-handle-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8l-4 4 4 4"/><path d="M6 8l4 4-4 4"/></svg>
+            </div>
+          </div>
+          <div class="ba-scrollbar-track"><div class="ba-scrollbar-thumb"></div></div>
+        </div>
+        <div class="ba-labels">
+          <span class="ba-label">Before</span>
+          <span class="ba-label">After</span>
+        </div>
+        <p class="ba-client-name">vincechafin.com</p>
+      </div>
+
+      <div class="ba-card ba-card-showcase" aria-hidden="true">
+        <div class="ba-container">
+          <div class="ba-scroll ba-before-scroll">
+            <img src="beforeafter/sacredsons.com/ss-homepage-full.jpg" alt="" draggable="false">
+          </div>
+        </div>
+        <p class="ba-client-name">sacredsons.com</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-16 px-6 bg-brand-dark">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/10 pt-8">
+      <img src="rick-robbins-logo-light.svg" alt="Rick Robbins" class="footer-logo">
+      <p class="text-sm text-white/40 font-light">&copy; 2026 Rick Robbins. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('open');
+    });
+
+    // Before/After sliders — init all cards
+    (function() {
+      var cards = document.querySelectorAll('.ba-card');
+      cards.forEach(function(card) {
+        initSlider(card.querySelector('.ba-container'));
+      });
+
+      function initSlider(container) {
+        if (!container) return;
+        var isDragging = false;
+        var afterScroll = container.querySelector('.ba-after-scroll');
+        var beforeScroll = container.querySelector('.ba-before-scroll');
+        var handle = container.querySelector('.ba-handle');
+        var position = 50;
+        var syncing = false;
+
+        if (!afterScroll || !handle) return; // showcase card, no slider
+
+        function updatePosition(clientX) {
+          var rect = container.getBoundingClientRect();
+          position = ((clientX - rect.left) / rect.width) * 100;
+          position = Math.max(0, Math.min(100, position));
+          afterScroll.style.clipPath = 'inset(0 0 0 ' + position + '%)';
+          handle.style.left = position + '%';
+        }
+
+        var track = container.querySelector('.ba-scrollbar-track');
+        var thumb = container.querySelector('.ba-scrollbar-thumb');
+
+        function updateScrollbar() {
+          var scrollHeight = beforeScroll.scrollHeight - beforeScroll.clientHeight;
+          if (scrollHeight <= 0) { if (track) track.style.display = 'none'; return; }
+          var trackHeight = track.clientHeight;
+          var thumbHeight = Math.max(30, (beforeScroll.clientHeight / beforeScroll.scrollHeight) * trackHeight);
+          var thumbTop = (beforeScroll.scrollTop / scrollHeight) * (trackHeight - thumbHeight);
+          thumb.style.height = thumbHeight + 'px';
+          thumb.style.top = thumbTop + 'px';
+        }
+
+        beforeScroll.addEventListener('scroll', function() {
+          if (syncing) return;
+          syncing = true;
+          afterScroll.scrollTop = beforeScroll.scrollTop;
+          updateScrollbar();
+          syncing = false;
+        });
+        afterScroll.addEventListener('scroll', function() {
+          if (syncing) return;
+          syncing = true;
+          beforeScroll.scrollTop = afterScroll.scrollTop;
+          updateScrollbar();
+          syncing = false;
+        });
+
+        setTimeout(updateScrollbar, 100);
+
+        container.addEventListener('mousedown', function(e) { isDragging = true; updatePosition(e.clientX); });
+        container.addEventListener('mousemove', function(e) { if (isDragging) updatePosition(e.clientX); });
+        container.addEventListener('touchstart', function(e) { isDragging = true; updatePosition(e.touches[0].clientX); });
+        container.addEventListener('touchmove', function(e) { if (isDragging) { e.preventDefault(); updatePosition(e.touches[0].clientX); } }, { passive: false });
+        window.addEventListener('mouseup', function() { isDragging = false; });
+        window.addEventListener('touchend', function() { isDragging = false; });
+      }
+    })();
+  </script>
+
+</body>
+</html>

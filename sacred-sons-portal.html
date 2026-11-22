@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sacred Sons Members Portal — Case Study by Rick Robbins</title>
+  <meta name="description" content="A full-stack membership platform replacing 13 disconnected tools with one product. 83 screens, 100K+ lines of code, serving 3,400+ members across four continents.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { cream: '#F5F0E8', ink: '#0A0A0A', neon: '#C4FF00' },
+          fontFamily: {
+            display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #F5F0E8; color: #0A0A0A; overflow-x: clip; }
+
+    /* ─── NAV ─── */
+    .pn { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 72px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background: rgba(10,10,10,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .pn-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: -0.02em; }
+    .pn-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; object-position: top center; border: 2px solid rgba(255,255,255,0.2); }
+    .pn-back { font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s; }
+    .pn-back:hover { color: #C4FF00; }
+    @media (max-width: 768px) { .pn { padding: 0 20px; } }
+
+    /* ─── HERO ─── */
+    .ph { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 120px 48px 80px; background: #0A0A0A; overflow: hidden; }
+    .ph::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.7) 50%, rgba(10,10,10,0.4) 100%); z-index: 1; }
+    .ph-bg { position: absolute; inset: 0; z-index: 0; }
+    .ph-bg img { width: 100%; height: 100%; object-fit: cover; object-position: top right; opacity: 0.5; }
+    .ph-content { position: relative; z-index: 2; max-width: 640px; }
+    .ph-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #C4FF00; margin-bottom: 20px; }
+    .ph-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(36px, 5vw, 64px); font-weight: 700; color: #fff; letter-spacing: -0.03em; text-transform: uppercase; line-height: 1.05; margin-bottom: 24px; }
+    .ph-desc { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+    .ph-stats { display: flex; flex-wrap: wrap; gap: 32px; margin-bottom: 40px; }
+    .ph-stat-val { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; color: #C4FF00; line-height: 1; }
+    .ph-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .ph-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+    .ph-pill { padding: 6px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75); letter-spacing: 0.04em; text-transform: uppercase; }
+    .ph-cta { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; background: #C4FF00; color: #0A0A0A; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-radius: 0; transition: transform 0.15s, box-shadow 0.15s; }
+    .ph-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,255,0,0.3); }
+    @media (max-width: 768px) { .ph { padding: 100px 20px 60px; } .ph-stats { gap: 20px; } }
+
+    /* ─── SECTION ─── */
+    .ps { padding: 100px 48px; max-width: 1400px; margin: 0 auto; }
+    .ps-dark { background: #0A0A0A; max-width: none; }
+    .ps-dark .ps-inner { max-width: 1400px; margin: 0 auto; }
+    .ps-label { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #C4FF00; background: #0A0A0A; display: inline-block; padding: 5px 14px; margin-bottom: 20px; }
+    .ps-dark .ps-label { background: rgba(255,255,255,0.1); }
+    .ps-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1.05; margin-bottom: 20px; }
+    .ps-dark .ps-title { color: #fff; }
+    .ps-desc { font-size: 16px; line-height: 1.75; color: #4B5563; max-width: 640px; margin-bottom: 40px; }
+    .ps-dark .ps-desc { color: rgba(255,255,255,0.6); }
+
+    /* Feature row: alternating image/text */
+    .pf { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items: center; margin-bottom: 80px; }
+    .pf:last-child { margin-bottom: 0; }
+    .pf.pf-reverse { direction: rtl; }
+    .pf.pf-reverse > * { direction: ltr; }
+    .pf-img { border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px -20px rgba(0,0,0,0.3); }
+    .pf-img img { width: 100%; display: block; border-radius: 12px; }
+    .pf-text {}
+    .pf-eyebrow { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #C4FF00; margin-bottom: 12px; }
+    .ps-dark .pf-eyebrow { color: #C4FF00; }
+    .pf-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(22px, 2.5vw, 32px); font-weight: 700; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 16px; }
+    .ps-dark .pf-title { color: #fff; }
+    .pf-body { font-size: 15px; line-height: 1.7; color: #4B5563; }
+    .ps-dark .pf-body { color: rgba(255,255,255,0.6); }
+    @media (max-width: 768px) {
+      .ps { padding: 60px 20px; }
+      .pf { grid-template-columns: 1fr; gap: 32px; }
+      .pf.pf-reverse { direction: ltr; }
+    }
+
+    /* ─── TECH STACK ─── */
+    .pt-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .pt-chip { padding: 8px 18px; border-radius: 999px; background: rgba(10,10,10,0.06); border: 1px solid rgba(10,10,10,0.08); font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500; color: #4B5563; }
+    .ps-dark .pt-chip { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+
+    /* ─── ROLE ─── */
+    .pr { padding: 100px 48px; background: #0A0A0A; }
+    .pr-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 0.4fr 0.6fr; gap: 64px; align-items: start; }
+    .pr-left {}
+    .pr-role-tag { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #C4FF00; margin-bottom: 12px; }
+    .pr-role-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(28px, 3.5vw, 44px); font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 20px; }
+    .pr-purpose { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+    .pr-measures-label { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+    .pr-measures { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pr-measure { padding: 6px 16px; border-radius: 999px; background: rgba(196,255,0,0.08); border: 1px solid rgba(196,255,0,0.15); font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 500; color: #C4FF00; }
+    .pr-right {}
+    .pr-resp { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .pr-resp:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .pr-resp-title { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .pr-resp-title::before { content: ''; width: 8px; height: 8px; border-radius: 2px; background: #C4FF00; flex-shrink: 0; }
+    .pr-resp-body { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.55); padding-left: 18px; }
+    @media (max-width: 768px) {
+      .pr { padding: 60px 20px; }
+      .pr-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ─── CTA ─── */
+    .pc { padding: 100px 48px; background: #0A0A0A; text-align: center; }
+    .pc-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(32px, 4vw, 56px); font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 20px; }
+    .pc-sub { font-size: 17px; color: rgba(255,255,255,0.5); margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+    /* ─── FOOTER ─── */
+    .pfoot { padding: 32px 48px; background: #0A0A0A; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; }
+    .pfoot-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+    .pfoot a { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .pfoot a:hover { color: #C4FF00; }
+    @media (max-width: 768px) { .pfoot { flex-direction: column; gap: 12px; text-align: center; padding: 24px 20px; } .pc { padding: 80px 20px; } }
+
+    /* Scroll reveal */
+    .sr { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .sr.is-visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="pn">
+    <a href="/v3" class="pn-logo">
+      <img src="rick.jpg" alt="Rick Robbins">
+      <span>RICK ROBBINS</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4FF00" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </a>
+    <a href="/v3#work" class="pn-back">&larr; Back to case studies</a>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="ph">
+    <div class="ph-bg"><img src="portal/06-events-and-calls/01-calendar.jpg" alt="Sacred Sons Portal"></div>
+    <div class="ph-content">
+      <div class="ph-eyebrow">Featured Project</div>
+      <h1 class="ph-title">Sacred Sons Members Portal</h1>
+      <p class="ph-desc">A full-stack membership platform that replaced 13 disconnected tools with one product. Commerce, learning, cohorts, events, community, and operations in a single source of truth for an organization running events on four continents.</p>
+      <div class="ph-stats">
+        <div><div class="ph-stat-val">3,400+</div><div class="ph-stat-label">Members</div></div>
+        <div><div class="ph-stat-val">83</div><div class="ph-stat-label">Screens</div></div>
+        <div><div class="ph-stat-val">100K+</div><div class="ph-stat-label">Lines of Code</div></div>
+        <div><div class="ph-stat-val">13</div><div class="ph-stat-label">Integrations</div></div>
+      </div>
+      <div class="ph-pills">
+        <span class="ph-pill">Next.js</span>
+        <span class="ph-pill">React</span>
+        <span class="ph-pill">TypeScript</span>
+        <span class="ph-pill">Supabase</span>
+        <span class="ph-pill">Stripe</span>
+        <span class="ph-pill">Clerk</span>
+      </div>
+      <a href="/v3" class="ph-cta" onclick="if(window.parent&&window.parent.openIntake)window.parent.openIntake();return false;">Build something like this <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </section>
+
+  <!-- ═══════════════ MY ROLE ═══════════════ -->
+  <section class="pr">
+    <div class="pr-inner">
+      <div class="pr-left sr">
+        <div class="pr-role-tag">My Role</div>
+        <div class="pr-role-title">Chief Technology &amp; Operations Officer</div>
+        <p class="pr-purpose">Own every system that Sacred Sons sells, delivers, and communicates through, and keep them working, connected, and paying out.</p>
+        <div class="pr-measures-label">Success Measures</div>
+        <div class="pr-measures">
+          <span class="pr-measure">Portal Uptime</span>
+          <span class="pr-measure">Checkout Conversion</span>
+          <span class="pr-measure">Failed-Payment Recovery</span>
+          <span class="pr-measure">Lead-to-Call Speed</span>
+          <span class="pr-measure">Request Turnaround</span>
+          <span class="pr-measure">Software Cost</span>
+        </div>
+      </div>
+      <div class="pr-right sr">
+        <div class="pr-resp">
+          <div class="pr-resp-title">Product</div>
+          <div class="pr-resp-body">Own the roadmap for the community portal, take requests and prioritize them, and ship features through an AI-assisted dev workflow. Lead the migration off WordPress/WooCommerce.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">Web</div>
+          <div class="pr-resp-body">Maintain sacredsons.com and every event landing page, including the redirects needed during the migration.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">Commerce &amp; Revenue</div>
+          <div class="pr-resp-body">Design pricing structures, SKUs, payment plans, and checkout. Oversee Stripe, payment health, and revenue reporting.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">CRM &amp; Automation</div>
+          <div class="pr-resp-body">Architect GoHighLevel workflows, calendars, lead routing, the AI chat and call bots, and SMS/email sequences.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">Platform Support</div>
+          <div class="pr-resp-body">Act as the escalation point for member-facing bugs that frontline staff can't resolve.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">Governance</div>
+          <div class="pr-resp-body">Set the rules on who can change what (repo access, SKU immutability, request channels), approve changes, and protect data integrity.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">Sales &amp; Team Enablement</div>
+          <div class="pr-resp-body">Give sales the live inventory, links, and tooling they need to close. Onboard new staff onto GHL, calendars, and the portal.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">Vendors &amp; Access</div>
+          <div class="pr-resp-body">Manage agency and contractor access, ad accounts, hosting, and software spend.</div>
+        </div>
+        <div class="pr-resp">
+          <div class="pr-resp-title">Growth</div>
+          <div class="pr-resp-body">Co-own Meta Ads strategy and budget decisions.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ MY ACCOUNT ═══════════════ -->
+  <section class="ps">
+    <div class="ps-label sr">Member Experience</div>
+    <h2 class="ps-title sr">Your Profile. Your Pathway. Your Record.</h2>
+    <p class="ps-desc sr">Every member gets a public profile with earned rank badges, a visible growth pathway, service hour tracking, and a digital wallet. All computed from real data, not manually assigned.</p>
+
+    <div class="pf sr">
+      <div class="pf-img"><img src="portal/01-my-account/01-profile.jpg" alt="Member Profile"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Profile</div>
+        <div class="pf-title">Public Profiles with Earned Badges</div>
+        <div class="pf-body">Every member gets a vanity URL. The honeycomb of rank badges is computed from completed trainings. LT1, LT2, and Founders Circle patches light up as they are earned. Fields edit inline, and the same badge logic drives the directory, rosters, and admin views.</div>
+      </div>
+    </div>
+
+    <div class="pf pf-reverse sr">
+      <div class="pf-img"><img src="portal/01-my-account/02-my-pathway.jpg" alt="My Pathway"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Pathway</div>
+        <div class="pf-title">A Visual Map of Growth</div>
+        <div class="pf-body">Members see exactly where they are in their journey and what's next. Each node represents a completed training, course, or milestone. The pathway is personal and dynamic, built from their actual participation data.</div>
+      </div>
+    </div>
+
+    <div class="pf sr">
+      <div class="pf-img"><img src="portal/01-my-account/04-wallet.jpg" alt="Wallet"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Wallet</div>
+        <div class="pf-title">Points, Credits, and Rewards</div>
+        <div class="pf-body">An internal points economy that tracks service hours, referrals, and engagement. Credits can be applied to future events and trainings. Everything is transparent and auditable.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ COURSES ═══════════════ -->
+  <section class="ps ps-dark">
+    <div class="ps-inner">
+      <div class="ps-label sr">Learning Platform</div>
+      <h2 class="ps-title sr">Courses, Quizzes, and Journals</h2>
+      <p class="ps-desc sr">Eight gated courses with signed video streaming, server-graded quizzes, and journal submissions reviewed by facilitators. All progress is tracked and feeds the member's pathway.</p>
+
+      <div class="pf sr">
+        <div class="pf-img"><img src="portal/04-courses/01-courses.jpg" alt="Course Catalog"></div>
+        <div class="pf-text">
+          <div class="pf-eyebrow">Catalog</div>
+          <div class="pf-title">Course Storefront</div>
+          <div class="pf-body">Every digital course, from the seven-day starter to the pillar courses. Prices pulled from the same catalog that feeds checkout. Each card leads to a dedicated sales page and instant-access purchase.</div>
+        </div>
+      </div>
+
+      <div class="pf pf-reverse sr">
+        <div class="pf-img"><img src="portal/04-courses/02-mind.jpg" alt="Mind Course"></div>
+        <div class="pf-text">
+          <div class="pf-eyebrow">Course Reader</div>
+          <div class="pf-title">Gated Content with Video</div>
+          <div class="pf-body">Each course features a framed reader with signed Cloudflare Stream video. Content is gated by enrollment and progress. Quizzes are graded server-side, and completion unlocks the next module.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ COMMUNITY ═══════════════ -->
+  <section class="ps">
+    <div class="ps-label sr">Community</div>
+    <h2 class="ps-title sr">Directory, Chat, and Global Map</h2>
+    <p class="ps-desc sr">A living community platform with real-time presence, searchable profiles, private messaging, discussion forums, and a global map showing members and events worldwide.</p>
+
+    <div class="pf sr">
+      <div class="pf-img"><img src="portal/05-community/02-members.jpg" alt="Member Directory"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Directory</div>
+        <div class="pf-title">Searchable Member Directory</div>
+        <div class="pf-body">Grouped by role and rank with live "online now" presence. Filters cover location, rank, and training history. Visibility rules come from database row-level security, so members only see what they are permitted to see.</div>
+      </div>
+    </div>
+
+    <div class="pf pf-reverse sr">
+      <div class="pf-img"><img src="portal/05-community/04-map-mode-members.jpg" alt="Map Mode"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Map</div>
+        <div class="pf-title">Global Member and Event Map</div>
+        <div class="pf-body">A Mapbox-powered world map showing members and events across four continents. Toggle between member view and event view. Find your nearest circle, event, or fellow member instantly.</div>
+      </div>
+    </div>
+
+    <div class="pf sr">
+      <div class="pf-img"><img src="portal/05-community/05-chat.jpg" alt="Chat"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Chat</div>
+        <div class="pf-title">Real-Time Messaging</div>
+        <div class="pf-body">Every cohort automatically gets its own private chat room alongside its Discourse forum, Zoom series, and calendar invites. Real-time messaging powered by Supabase Realtime.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ EVENTS ═══════════════ -->
+  <section class="ps ps-dark">
+    <div class="ps-inner">
+      <div class="ps-label sr">Events and Calls</div>
+      <h2 class="ps-title sr">Calendar, Registration, and Cohorts</h2>
+      <p class="ps-desc sr">Over 100 events a year across North America, Europe, and Latin America. The portal handles the full lifecycle: discovery, registration, payment, rosters, room assignments, and attendance.</p>
+
+      <div class="pf sr">
+        <div class="pf-img"><img src="portal/06-events-and-calls/01-calendar.jpg" alt="Event Calendar"></div>
+        <div class="pf-text">
+          <div class="pf-eyebrow">Calendar</div>
+          <div class="pf-title">Public Event Calendar</div>
+          <div class="pf-body">Cards, list, month grid, or map view. Filters cover audience, format, and region. Scarcity ribbons ("2 spots left") are calculated from real ticket capacity. Public, indexed by search engines, and feeds the AI sales assistant.</div>
+        </div>
+      </div>
+
+      <div class="pf pf-reverse sr">
+        <div class="pf-img"><img src="portal/06-events-and-calls/05-events__marni-suu-reynolds-ph-d-november-2026.jpg" alt="Event Detail"></div>
+        <div class="pf-text">
+          <div class="pf-eyebrow">Event Detail</div>
+          <div class="pf-title">Rich Event Pages</div>
+          <div class="pf-body">Each event gets a full page with facilitator bios, location details, ticket tiers, and Stripe checkout built at request time. Webhooks grant access automatically upon purchase.</div>
+        </div>
+      </div>
+
+      <div class="pf sr">
+        <div class="pf-img"><img src="portal/06-events-and-calls/03-calls.jpg" alt="Calls"></div>
+        <div class="pf-text">
+          <div class="pf-eyebrow">Cohorts</div>
+          <div class="pf-title">Automated Pod Management</div>
+          <div class="pf-body">Every online cohort automatically gets its own Zoom series, Google Calendar invites, a private Discourse board, and a real-time chat room. A live progress grid shows modules, call attendance, and quiz results for each member.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ADMIN ═══════════════ -->
+  <section class="ps">
+    <div class="ps-label sr">Operations</div>
+    <h2 class="ps-title sr">Admin Tools That Actually Work</h2>
+    <p class="ps-desc sr">Role-based admin with audit logging, roster management, room assignments, journal review, event creation, and "view as member" impersonation for support. Everything staff needs in one place.</p>
+
+    <div class="pf sr">
+      <div class="pf-img"><img src="portal/07-admin/01-admin__rosters.jpg" alt="Rosters"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Rosters</div>
+        <div class="pf-title">Live Event Rosters</div>
+        <div class="pf-body">Synced from WooCommerce every hour. Staff can view attendance history, dietary needs, emergency contacts, and special requirements. Export to CSV for offline use at remote event locations.</div>
+      </div>
+    </div>
+
+    <div class="pf pf-reverse sr">
+      <div class="pf-img"><img src="portal/07-admin/02-admin__rooms.jpg" alt="Room Board"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Rooms</div>
+        <div class="pf-title">Drag-and-Drop Room Assignments</div>
+        <div class="pf-body">A visual board for assigning beds at retreat venues. Drag members between rooms, track capacity, and handle special accommodation requests. Automatically generates room lists for venue staff.</div>
+      </div>
+    </div>
+
+    <div class="pf sr">
+      <div class="pf-img"><img src="portal/07-admin/03-admin__journals.jpg" alt="Journals"></div>
+      <div class="pf-text">
+        <div class="pf-eyebrow">Journals</div>
+        <div class="pf-title">Facilitator Journal Review</div>
+        <div class="pf-body">726 journal submissions from members completing course work. Facilitators review inline, leave feedback, and mark completion. All tracked and auditable in the admin dashboard.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ LANDING PAGES ═══════════════ -->
+  <section class="ps ps-dark">
+    <div class="ps-inner">
+      <div class="ps-label sr">Landing Pages</div>
+      <h2 class="ps-title sr">Conversion-Optimized Pages</h2>
+      <p class="ps-desc sr">Public-facing pages designed to convert visitors into members. Each page is SEO-optimized with custom meta, structured data, and scarcity-driven CTAs.</p>
+
+      <div class="pf sr">
+        <div class="pf-img"><img src="portal/08-landing-pages/01-homepage.jpg" alt="Homepage"></div>
+        <div class="pf-text">
+          <div class="pf-eyebrow">Homepage</div>
+          <div class="pf-title">The Front Door</div>
+          <div class="pf-body">The public homepage drives traffic to events, trainings, and the community. Dynamic content pulls from the event calendar and course catalog so the page is always current without manual updates.</div>
+        </div>
+      </div>
+
+      <div class="pf pf-reverse sr">
+        <div class="pf-img"><img src="portal/08-landing-pages/02-immersion.jpg" alt="Immersion"></div>
+        <div class="pf-text">
+          <div class="pf-eyebrow">Immersion</div>
+          <div class="pf-title">Event Sales Pages</div>
+          <div class="pf-body">Dedicated landing pages for flagship events with video, testimonials, facilitator bios, and embedded Stripe checkout. Each page is a complete sales funnel in itself.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TECH STACK ═══════════════ -->
+  <section class="ps">
+    <div class="ps-label sr">Technical Foundation</div>
+    <h2 class="ps-title sr">Built to Scale</h2>
+    <p class="ps-desc sr">57 database tables with row-level security throughout. 128 server endpoints. 1,229 commits in five months. Every purchase, roster change, call recording, and journal entry flows to the right place automatically.</p>
+    <div class="pt-grid sr">
+      <span class="pt-chip">Next.js 14</span>
+      <span class="pt-chip">React</span>
+      <span class="pt-chip">TypeScript</span>
+      <span class="pt-chip">Tailwind CSS</span>
+      <span class="pt-chip">Supabase Postgres</span>
+      <span class="pt-chip">Row-Level Security</span>
+      <span class="pt-chip">Clerk Auth</span>
+      <span class="pt-chip">Stripe Checkout</span>
+      <span class="pt-chip">Webhooks</span>
+      <span class="pt-chip">Cloudflare Stream</span>
+      <span class="pt-chip">Zoom API</span>
+      <span class="pt-chip">Google Calendar</span>
+      <span class="pt-chip">Discourse</span>
+      <span class="pt-chip">Mapbox</span>
+      <span class="pt-chip">GoHighLevel</span>
+      <span class="pt-chip">WooCommerce</span>
+      <span class="pt-chip">Slack</span>
+      <span class="pt-chip">Notion</span>
+      <span class="pt-chip">Netlify</span>
+      <span class="pt-chip">GitHub Actions CI/CD</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CTA ═══════════════ -->
+  <section class="pc">
+    <h2 class="pc-title sr">Want something<br>like this?</h2>
+    <p class="pc-sub sr">This is what happens when you stop duct-taping tools together and build the thing your organization actually needs.</p>
+    <a href="/v3" class="ph-cta" style="margin:0 auto;">Let's Talk <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="pfoot">
+    <div class="pfoot-copy">&copy; 2026 Rick Robbins. All rights reserved.</div>
+    <a href="/v3">&larr; Back to rickrobbins.com</a>
+  </footer>
+
+  <script>
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.sr').forEach(function(el) { obs.observe(el); });
+  </script>
+</body>
+</html>

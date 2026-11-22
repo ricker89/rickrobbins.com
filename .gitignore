@@ -1,0 +1,40 @@
+# Local Netlify folder
+.netlify
+
+# Playwright MCP cache
+.playwright-mcp
+
+# PSD source files
+*.psd
+
+# Upwork portfolio (generated)
+upwork-portfolio/
+
+# Large files (over 5MB, stay in Dropbox only)
+herovideo.mp4
+screenshots/homepage_ff.png
+screenshots/homepage_mobile_ff.png
+beforeafter/flowwithchloe.com/screencapture-flowwithchloe-2026-05-10-11_40_14.jpg
+beforeafter/founders\ circle/founderscircle.jpg
+beforeafter/godsspear.com/godsspear.jpg
+beforeafter/jennrobbins.actor/jennrobbins-full.png
+beforeafter/mamayura.org/mamayura.jpg
+beforeafter/sacred\ sons\ summit\ 2026/summit20262.jpg
+beforeafter/sacredsons.com/ss-homepage-full.png
+beforeafter/sacredsons.com/thecircle-full.png
+beforeafter/shemsheartwell.com/shems-after-full-2.png
+beforeafter/shemsheartwell.com/shems-after-full.png
+beforeafter/shemsheartwell.com/shems-before-full.png
+beforeafter/thisgoldenlife.com/screencapture-start-thisgoldenlife-2026-05-04-20_42_09-2.jpg
+beforeafter/thisgoldenlife.com/thisgoldenlife.jpg
+beforeafter/vincechafin.com/vince-after-full.png
+beforeafter/vincechafin.com/vince-before-full.png
+beforeafter/vincechafin.com/vince-guide.jpg
+beforeafter/walkingwithanthony.org/walkingwithanthony.jpg
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/

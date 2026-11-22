@@ -1,0 +1,42 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/portfolio.html"
+  to = "/portfolio"
+  status = 301
+
+[[redirects]]
+  from = "/survey.html"
+  to = "/survey"
+  status = 301
+
+[[redirects]]
+  from = "/v2"
+  to = "/v2.html"
+  status = 200
+
+[[redirects]]
+  from = "/v3"
+  to = "/v3.html"
+  status = 200
+
+[[redirects]]
+  from = "/sacred-sons-portal"
+  to = "/sacred-sons-portal.html"
+  status = 200
+
+[[redirects]]
+  from = "/v4"
+  to = "/v4.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"

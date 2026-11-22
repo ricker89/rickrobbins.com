@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rick Robbins — v2 Hero Concept</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="v2 hero design experiment for rickrobbins.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0F172A',
+              muted: '#475569',
+              light: '#94A3B8',
+              accent: '#CA8A04',
+              'accent-light': '#FEF9C3',
+            }
+          },
+          fontFamily: {
+            serif: ['EB Garamond', 'Georgia', 'serif'],
+            sans: ['Lato', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      font-family: 'Lato', sans-serif;
+      color: #0F172A;
+      background: #FAFAF9;
+      overflow-x: hidden;
+    }
+
+    /* v2 badge so it's clear which page you're on */
+    .v2-badge {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 100;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(202,138,4,0.15);
+      color: #CA8A04;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid rgba(202,138,4,0.3);
+    }
+    .v2-back {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.08);
+      color: #0F172A;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid rgba(15,23,42,0.12);
+      transition: background 0.2s ease;
+    }
+    .v2-back:hover { background: rgba(15,23,42,0.15); }
+
+    /* Morphing text — same engine as production */
+    .morph-wrapper {
+      display: inline-flex;
+      position: relative;
+      vertical-align: baseline;
+      filter: url(#threshold) blur(0.6px);
+      justify-content: center;
+      /* Mobile: tight pull-in (the negative margin compensates for the filter's
+         visible halo at small sizes). Desktop overridden below. */
+      margin: 0 -0.12em;
+      max-width: 100%;
+    }
+    @media (min-width: 768px) {
+      .morph-wrapper {
+        /* Desktop: keep natural inline word-spacing — the filter halo at large
+           font sizes is small relative to a natural space character, so we
+           don't need to pull text inward. */
+        margin: 0;
+      }
+    }
+    .morph-wrapper .morph-text {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .morph-wrapper .morph-sizer {
+      white-space: nowrap;
+      display: inline-block;
+      font: inherit;
+      color: transparent;
+      pointer-events: none;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    /* Hero layout */
+    .v2-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      /* top padding tight; bottom padding reserves the marquee zone (38vh) + buffer */
+      padding: clamp(48px, 7vh, 72px) 16px calc(38vh + 24px);
+      overflow: hidden;
+    }
+    .v2-pill {
+      display: inline-block;
+      padding: 7px 18px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.04);
+      border: 1px solid rgba(15,23,42,0.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: #475569;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .v2-pill-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #CA8A04;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .v2-headline {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: #0F172A;
+      margin: 0;
+      max-width: 1100px;
+    }
+    .v2-headline .accent { color: #CA8A04; }
+    .v2-desc {
+      margin-top: 22px;
+      max-width: 560px;
+      font-size: clamp(16px, 1.4vw, 18px);
+      line-height: 1.65;
+      color: #475569;
+      font-weight: 300;
+    }
+    .v2-cta {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: #0F172A;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.15s ease;
+      box-shadow: 0 12px 30px -10px rgba(15,23,42,0.4);
+    }
+    .v2-cta:hover { transform: scale(1.04); background: #1E293B; }
+    .v2-cta:active { transform: scale(0.97); }
+    .v2-cta svg { transition: transform 0.2s ease; }
+    .v2-cta:hover svg { transform: translate(2px, -2px); }
+
+    /* Marquee at bottom */
+    .marquee-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 38vh;
+      max-height: 360px;
+      min-height: 220px;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 88%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 88%, transparent 100%);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 22px;
+      width: max-content;
+      animation: v2Marquee 60s linear infinite;
+      will-change: transform;
+      align-items: center;
+      padding: 24px 0;
+    }
+    .marquee-wrap:hover .marquee-track {
+      animation-play-state: paused;
+    }
+    @keyframes v2Marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .marquee-card {
+      flex-shrink: 0;
+      aspect-ratio: 3 / 4;
+      width: clamp(180px, 18vw, 260px);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px -16px rgba(15,23,42,0.35), 0 0 0 1px rgba(15,23,42,0.06);
+      background: #fff;
+      transition: transform 0.4s cubic-bezier(0.32, 0.72, 0.28, 1);
+    }
+    .marquee-card:nth-child(odd)  { transform: rotate(-3deg) translateY(8px); }
+    .marquee-card:nth-child(even) { transform: rotate(4deg)  translateY(-6px); }
+    .marquee-card:nth-child(3n)   { transform: rotate(-1.5deg) translateY(14px); }
+    .marquee-card:nth-child(4n)   { transform: rotate(2.5deg)  translateY(-12px); }
+    .marquee-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    @media (max-width: 767px) {
+      .v2-hero { padding: clamp(56px, 8vh, 80px) 16px calc(34vh + 16px); }
+      .marquee-wrap { height: 34vh; }
+      .marquee-card { width: 150px; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <span class="v2-badge">v2 concept</span>
+  <a href="/" class="v2-back">← Back to live site</a>
+
+  <section class="v2-hero">
+    <span class="v2-pill"><span class="v2-pill-dot"></span>Online Marketing Systems Strategist</span>
+
+    <h1 class="v2-headline">
+      I help <span class="morph-wrapper accent" id="morph-container"><span class="morph-sizer" id="morph-sizer"></span><span class="morph-text" id="morph-text1"></span><span class="morph-text" id="morph-text2"></span></span> help people.
+    </h1>
+
+    <p class="v2-desc">
+      Personal brand websites for coaches, healers, and transformational practitioners. I take who you are and package it online so you can reach the people who need you most.
+    </p>
+
+    <a href="/#top" class="v2-cta">
+      Start the conversation
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+    </a>
+
+    <!-- Animated marquee of portfolio screenshots -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee-track" id="marquee-track">
+        <!-- Cards injected by JS so we can duplicate cleanly for seamless loop -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SVG filter for the morph blur threshold -->
+  <svg style="position:absolute;width:0;height:0" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <filter id="threshold">
+        <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140" />
+      </filter>
+    </defs>
+  </svg>
+
+  <script>
+    // Portfolio image set — pulled from beforeafter/* (matches the production rail)
+    const PORTFOLIO_IMAGES = [
+      'beforeafter/sacredsons.com/ss-homepage-full.jpg',
+      'beforeafter/shemsheartwell.com/shems-after-full-2.jpg',
+      'beforeafter/vincechafin.com/vince-after-full.jpg',
+      'beforeafter/jennrobbins.actor/jennrobbins-full.jpg',
+      'beforeafter/sacredsons-summit-2026/summit-card.jpg',
+      'beforeafter/founders-circle/fc-card.jpg',
+      'beforeafter/godsspear.com/godsspear-card.jpg',
+      'beforeafter/walkingwithanthony.org/wwa-card.jpg',
+      'beforeafter/mamayura.org/mamayura-card.jpg',
+      'beforeafter/vincechafin.com/vince-guide-card.jpg',
+      'beforeafter/shemsheartwell.com/shems-after-full.jpg',
+    ];
+
+    // Build marquee — duplicate the list for seamless loop
+    (function() {
+      const track = document.getElementById('marquee-track');
+      const set = [...PORTFOLIO_IMAGES, ...PORTFOLIO_IMAGES];
+      const frag = document.createDocumentFragment();
+      set.forEach(function(src, i) {
+        const card = document.createElement('div');
+        card.className = 'marquee-card';
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        img.loading = i < 6 ? 'eager' : 'lazy';
+        img.decoding = 'async';
+        card.appendChild(img);
+        frag.appendChild(card);
+      });
+      track.appendChild(frag);
+    })();
+
+    // Morphing text — wait for fonts to load before measuring widths,
+    // otherwise the wrapper sizes against the fallback font (Georgia) and
+    // ends up with extra padding around the EB Garamond word.
+    (function() {
+      const texts = ['people', 'experts', 'coaches', 'founders', 'facilitators'];
+      const morphTime = 1.5;
+      const cooldownTime = 0.8;
+
+      const text1 = document.getElementById('morph-text1');
+      const text2 = document.getElementById('morph-text2');
+      const sizer = document.getElementById('morph-sizer');
+
+      let textIndex = 0;
+      let morph = 0;
+      let cooldown = cooldownTime;
+      let time = new Date();
+      let initialHold = 3;
+
+      const widths = {};
+      let lastSizedIndex = -1;
+
+      function measureAll() {
+        // CRITICAL: clear any explicit width before measuring, otherwise
+        // sizer.offsetWidth returns the last-set fixed pixel value instead of
+        // the natural content width (every word would measure identical).
+        sizer.style.width = 'auto';
+        texts.forEach(function(w) {
+          sizer.textContent = w;
+          widths[w] = sizer.offsetWidth;
+        });
+        // Re-apply current word's width after re-measure
+        const cur = texts[textIndex % texts.length];
+        sizer.textContent = cur;
+        sizer.style.width = widths[cur] + 'px';
+      }
+
+      function init() {
+        measureAll();
+        sizer.style.display = 'inline-block';
+        sizer.style.overflow = 'hidden';
+        text1.textContent = texts[0];
+        text2.textContent = texts[0];
+        animate();
+      }
+
+      function setSizerWidth(i) {
+        if (i === lastSizedIndex) return;
+        lastSizedIndex = i;
+        const w = texts[i % texts.length];
+        sizer.textContent = w;
+        sizer.style.width = widths[w] + 'px';
+      }
+
+      function doMorph() {
+        morph -= cooldown;
+        cooldown = 0;
+        let f = morph / morphTime;
+        if (f > 1) { cooldown = cooldownTime; f = 1; }
+        setMorph(f);
+        if (f === 1) textIndex++;
+      }
+      function setMorph(f) {
+        text2.style.filter = 'blur(' + Math.min(8 / f - 8, 100) + 'px)';
+        text2.style.opacity = (Math.pow(f, 0.4) * 100) + '%';
+        const inv = 1 - f;
+        text1.style.filter = 'blur(' + Math.min(8 / inv - 8, 100) + 'px)';
+        text1.style.opacity = (Math.pow(inv, 0.4) * 100) + '%';
+        text1.textContent = texts[textIndex % texts.length];
+        text2.textContent = texts[(textIndex + 1) % texts.length];
+        if (f >= 0.5) setSizerWidth((textIndex + 1) % texts.length);
+      }
+      function doCooldown() {
+        morph = 0;
+        text2.style.filter = 'none'; text2.style.opacity = '100%';
+        text1.style.filter = 'none'; text1.style.opacity = '0%';
+        setSizerWidth(textIndex % texts.length);
+      }
+      function animate() {
+        requestAnimationFrame(animate);
+        const newTime = new Date();
+        const dt = (newTime - time) / 1000;
+        time = newTime;
+        if (initialHold > 0) { initialHold -= dt; doCooldown(); return; }
+        cooldown -= dt;
+        if (cooldown <= 0) doMorph();
+        else doCooldown();
+      }
+
+      // Wait for fonts (EB Garamond) before measuring; fall back if API missing
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(init);
+        // Safety: re-measure once specifically when EB Garamond is loaded
+        document.fonts.load('48px "EB Garamond"').then(measureAll).catch(function(){});
+      } else {
+        // Older browsers: small delay so fonts have a chance to settle
+        setTimeout(init, 250);
+      }
+    })();
+  </script>
+</body>
+</html>
