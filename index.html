@@ -1608,15 +1608,29 @@
 
     /* ─── TESTIMONIALS ─── */
     .v3-testimonials {
-      padding: 100px 48px;
+      padding: 80px 0;
       background: #0A0A0A;
+      overflow: hidden;
     }
     .v3-testimonials .v3-section-header {
       border-color: rgba(255,255,255,0.1);
       max-width: 1400px;
       margin: 0 auto 48px;
+      padding: 0 48px;
     }
     .v3-testimonials .v3-section-label { color: #fff; }
+    .v3-test-marquee {
+      display: flex;
+      width: max-content;
+      animation: testScroll 40s linear infinite;
+    }
+    .v3-test-marquee:hover {
+      animation-play-state: paused;
+    }
+    @keyframes testScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
     /* Horizontal carousel wrapper */
     .hc-wrap {
       position: relative;
@@ -1662,7 +1676,7 @@
       .hc-prev { left: 4px; }
       .hc-next { right: 4px; }
     }
-    .v3-test-card { flex: 0 0 400px; min-height: 360px; }
+    .v3-test-card { flex: 0 0 400px; min-height: 360px; margin-right: 24px; }
     @media (max-width: 768px) {
       .v3-test-card { flex: 0 0 300px; min-height: 320px; }
     }
@@ -2237,12 +2251,9 @@
     <div class="v3-section-header">
       <span class="v3-section-label">Testimonials</span>
     </div>
-    <div class="hc-wrap" id="test-carousel">
-      <button class="hc-arrow hc-prev" onclick="hcNav('test-carousel',-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-      <button class="hc-arrow hc-next" onclick="hcNav('test-carousel',1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
-      <div class="hc-track"><div class="hc-inner" id="test-inner">
-      <!-- Alex Morrison -->
-      <div class="v3-test-card reveal">
+    <div class="v3-test-marquee">
+      <!-- Set 1 -->
+      <div class="v3-test-card">
         <div class="v3-test-card-bg" style="background-image:url('headshots/alex-morrison.jpg');"></div>
         <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <div class="v3-test-quote">
@@ -2256,8 +2267,7 @@
           </div>
         </div>
       </div>
-      <!-- Vince Chafin -->
-      <div class="v3-test-card reveal">
+      <div class="v3-test-card">
         <div class="v3-test-card-bg" style="background-image:url('headshots/vince-chafin.jpg');"></div>
         <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <div class="v3-test-quote">
@@ -2271,8 +2281,7 @@
           </div>
         </div>
       </div>
-      <!-- Adam Jackson -->
-      <div class="v3-test-card reveal">
+      <div class="v3-test-card">
         <div class="v3-test-card-bg" style="background-image:url('headshots/adam-jackson.jpg');"></div>
         <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <div class="v3-test-quote">
@@ -2286,8 +2295,7 @@
           </div>
         </div>
       </div>
-      <!-- Neil Christiansen -->
-      <div class="v3-test-card reveal">
+      <div class="v3-test-card">
         <div class="v3-test-card-bg" style="background-image:url('headshots/neil-christiansen.jpg');"></div>
         <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <div class="v3-test-quote">
@@ -2301,8 +2309,7 @@
           </div>
         </div>
       </div>
-      <!-- Kale Ka'alekahi -->
-      <div class="v3-test-card reveal">
+      <div class="v3-test-card">
         <div class="v3-test-card-bg" style="background-image:url('headshots/kale-kaalekahi.jpg');"></div>
         <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <div class="v3-test-quote">
@@ -2316,7 +2323,78 @@
           </div>
         </div>
       </div>
-    </div></div></div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="v3-test-card">
+        <div class="v3-test-card-bg" style="background-image:url('headshots/alex-morrison.jpg');"></div>
+        <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="v3-test-quote">
+          "It's such a gift for us to have you in on this process. The way that you frame things has cracked open for us how to make everything better, and how to make people's experience better. It's been a real joy collaborating with you and having your perspective and excellence in production in this process. It's really been awesome for us. Thank you."
+        </div>
+        <div class="v3-test-author">
+          <div class="v3-test-avatar"><img src="headshots/alex-morrison.jpg" alt="Alex Morrison"></div>
+          <div>
+            <div class="v3-test-name">Alex Morrison</div>
+            <div class="v3-test-role">Expert Fundraising</div>
+          </div>
+        </div>
+      </div>
+      <div class="v3-test-card">
+        <div class="v3-test-card-bg" style="background-image:url('headshots/vince-chafin.jpg');"></div>
+        <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="v3-test-quote">
+          "People really like you and they look up to you. People like being with you and they like working with you. There's clearly something in your integrity, responsibility, and accountability that people trust you and they want to be with you and work with you. And you're calm. I don't think I've ever seen you excited or mad or dysregulated in any way."
+        </div>
+        <div class="v3-test-author">
+          <div class="v3-test-avatar"><img src="headshots/vince-chafin.jpg" alt="Vince Chafin"></div>
+          <div>
+            <div class="v3-test-name">Vince Chafin</div>
+            <div class="v3-test-role">Speaker &middot; Author &middot; Coach</div>
+          </div>
+        </div>
+      </div>
+      <div class="v3-test-card">
+        <div class="v3-test-card-bg" style="background-image:url('headshots/adam-jackson.jpg');"></div>
+        <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="v3-test-quote">
+          "Rick, working with you is the shit. You're awesome. You fucking kill it. We have the potential to do great things, and we have done some great things, and we're gonna do more. We've worked with some badass collaborators, and you're the best."
+        </div>
+        <div class="v3-test-author">
+          <div class="v3-test-avatar"><img src="headshots/adam-jackson.jpg" alt="Adam Jackson"></div>
+          <div>
+            <div class="v3-test-name">Adam Jackson</div>
+            <div class="v3-test-role">Co-Founder &middot; Sacred Sons</div>
+          </div>
+        </div>
+      </div>
+      <div class="v3-test-card">
+        <div class="v3-test-card-bg" style="background-image:url('headshots/neil-christiansen.jpg');"></div>
+        <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="v3-test-quote">
+          "This has been the most collaborative two years that the co-founders have had with any individual on multiple levels, from a personal connective place as friends all the way up to the high vision with a lot of integration necessary for us to get there. And yes, I do see you as the one that has architected this alongside us."
+        </div>
+        <div class="v3-test-author">
+          <div class="v3-test-avatar"><img src="headshots/neil-christiansen.jpg" alt="Neil Christiansen"></div>
+          <div>
+            <div class="v3-test-name">Neil Christiansen</div>
+            <div class="v3-test-role">Co-Founder &middot; Sacred Sons</div>
+          </div>
+        </div>
+      </div>
+      <div class="v3-test-card">
+        <div class="v3-test-card-bg" style="background-image:url('headshots/kale-kaalekahi.jpg');"></div>
+        <div class="v3-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="v3-test-quote">
+          "Who's one of the smartest guys I know? It's you. You're brilliant in so many ways, it's unreal. I have an admiration and a respect for you because of your brilliance. There's depth and there's a level of sharing that I don't get to experience with many people, but I have that with you."
+        </div>
+        <div class="v3-test-author">
+          <div class="v3-test-avatar"><img src="headshots/kale-kaalekahi.jpg" alt="Kale Ka'alekahi"></div>
+          <div>
+            <div class="v3-test-name">Kale Ka&#8217;alekahi</div>
+            <div class="v3-test-role">Co-Founder &middot; Sacred Sons</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ═══════════════ VOICE ═══════════════ -->
