@@ -1618,7 +1618,25 @@
     }
     .v3-testimonials .v3-section-label { color: #fff; }
     .v3-testimonials .hc-wrap { max-width: none; }
-    .v3-testimonials .hc-track { padding: 0 60px 16px; }
+    .v3-testimonials .hc-track { padding: 0 60px 16px; position: relative; }
+    .v3-testimonials .hc-track::before,
+    .v3-testimonials .hc-track::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .v3-testimonials .hc-track::before {
+      left: 0;
+      background: linear-gradient(to right, #0A0A0A, transparent);
+    }
+    .v3-testimonials .hc-track::after {
+      right: 0;
+      background: linear-gradient(to left, #0A0A0A, transparent);
+    }
     /* Horizontal carousel wrapper */
     .hc-wrap {
       position: relative;
