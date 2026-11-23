@@ -33,10 +33,10 @@ export default async (req) => {
 
     // Build custom fields for the intake answers
     const customFields = [];
-    if (who) customFields.push({ key: "business_type", value: who });
-    if (where) customFields.push({ key: "journey_stage", value: where });
-    if (seeking) customFields.push({ key: "desired_outcome", value: seeking });
-    if (budget) customFields.push({ key: "investment_readiness", value: budget });
+    if (who) customFields.push({ id: "uEzEHWP29Zt403t5lJlE", field_value: who });
+    if (where) customFields.push({ id: "4BGOYXZCpuxuWGYHu4x2", field_value: where });
+    if (seeking) customFields.push({ id: "H2bXfmbSBBcFV0I3l5XN", field_value: seeking });
+    if (budget) customFields.push({ id: "yt0izaqFfP5sO9zCSE60", field_value: budget });
 
     const contactPayload = {
       locationId: LOCATION_ID,
