@@ -1485,8 +1485,25 @@
       overflow: hidden;
       padding: 60px 0 80px;
       background: #0A0A0A;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      position: relative;
+    }
+    .v3-people-marquee::before,
+    .v3-people-marquee::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .v3-people-marquee::before {
+      left: 0;
+      background: linear-gradient(to right, #0A0A0A, transparent);
+    }
+    .v3-people-marquee::after {
+      right: 0;
+      background: linear-gradient(to left, #0A0A0A, transparent);
     }
     .v3-people-track {
       display: flex;
